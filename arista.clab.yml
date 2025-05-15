@@ -1,0 +1,112 @@
+name: arista-${SUDO_USER:=$USER}
+
+topology:
+  kinds:
+    ceos:
+      kind: ceos
+      image: arista/ceos:latest
+    linux:
+      kind: linux
+      image: linux
+  nodes:
+    boarderleaf1:
+      kind: ceos
+    boarderleaf2:
+      kind: ceos
+    spine1:
+      kind: ceos
+    spine2:
+      kind: ceos
+    spine3:
+      kind: ceos
+    spine4:
+      kind: ceos
+    leaf1:
+      kind: ceos
+    leaf2:
+      kind: ceos
+    leaf3:
+      kind: ceos
+    leaf4:
+      kind: ceos
+    host1:
+      kind: ceos
+    host2:
+      kind: ceos
+    host3:
+      kind: ceos
+    host4:
+      kind: ceos
+    host5:
+      kind: linux
+    host6:
+      kind: linux
+    host7:
+      kind: linux
+    host8:
+      kind: linux
+    mgmt:
+      kind: linux
+  links:
+#boarderleaf1 -> spines
+    - endpoints: ["boarderleaf1:eth3", "spine1:eth7"]
+    - endpoints: ["boarderleaf1:eth4", "spine2:eth7"]
+    - endpoints: ["boarderleaf1:eth5", "spine3:eth7"]
+    - endpoints: ["boarderleaf1:eth6", "spine4:eth7"]
+#boarderleaf2 -> spines
+    - endpoints: ["boarderleaf2:eth3", "spine1:eth8"]
+    - endpoints: ["boarderleaf2:eth4", "spine2:eth8"]
+    - endpoints: ["boarderleaf2:eth5", "spine3:eth8"]
+    - endpoints: ["boarderleaf2:eth6", "spine4:eth8"]
+#spine1 -> leafs
+    - endpoints: ["spine1:eth3", "leaf1:eth3"]
+    - endpoints: ["spine1:eth4", "leaf2:eth3"]
+    - endpoints: ["spine1:eth5", "leaf3:eth3"]
+    - endpoints: ["spine1:eth6", "leaf4:eth3"]
+#spine2 -> leafs
+    - endpoints: ["spine2:eth3", "leaf1:eth4"]
+    - endpoints: ["spine2:eth4", "leaf2:eth4"]
+    - endpoints: ["spine2:eth5", "leaf3:eth4"]
+    - endpoints: ["spine2:eth6", "leaf4:eth4"]
+#spine3 -> leafs
+    - endpoints: ["spine3:eth3", "leaf1:eth5"]
+    - endpoints: ["spine3:eth4", "leaf2:eth5"]
+    - endpoints: ["spine3:eth5", "leaf3:eth5"]
+    - endpoints: ["spine3:eth6", "leaf4:eth5"]
+#spine4 -> leafs
+    - endpoints: ["spine4:eth3", "leaf1:eth6"]
+    - endpoints: ["spine4:eth4", "leaf2:eth6"]
+    - endpoints: ["spine4:eth5", "leaf3:eth6"]
+    - endpoints: ["spine4:eth6", "leaf4:eth6"]
+# spine1 <-> spine2
+    - endpoints: ["spine1:eth1","spine2:eth1"]
+    - endpoints: ["spine1:eth2","spine2:eth2"]
+# spine3 <-> spine4
+    - endpoints: ["spine3:eth1","spine4:eth1"]
+    - endpoints: ["spine3:eth2","spine4:eth2"]
+# leaf1 -> hosts
+    - endpoints: ["leaf1:eth7", "host1:eth1"]
+    - endpoints: ["leaf1:eth8", "host5:eth1"]
+    - endpoints: ["leaf1:eth9", "host2:eth1"]
+    - endpoints: ["leaf1:eth10", "host6:eth1"]
+# leaf2 -> hosts
+    - endpoints: ["leaf2:eth7", "host1:eth2"]
+    - endpoints: ["leaf2:eth8", "host5:eth2"]
+    - endpoints: ["leaf2:eth9", "host2:eth2"]
+    - endpoints: ["leaf2:eth10", "host6:eth2"]
+# leaf3 -> hosts
+    - endpoints: ["leaf3:eth7", "host3:eth1"]
+    - endpoints: ["leaf3:eth8", "host7:eth1"]
+    - endpoints: ["leaf3:eth9", "host4:eth1"]
+    - endpoints: ["leaf3:eth10", "host8:eth1"]
+# leaf4 -> hosts
+    - endpoints: ["leaf4:eth7", "host3:eth2"]
+    - endpoints: ["leaf4:eth8", "host7:eth2"]
+    - endpoints: ["leaf4:eth9", "host4:eth2"]
+    - endpoints: ["leaf4:eth10", "host8:eth2"]
+# leaf1 <-> leaf2
+    - endpoints: ["leaf1:eth1","leaf2:eth1"]
+    - endpoints: ["leaf1:eth2","leaf2:eth2"]
+# leaf3 <-> leaf4
+    - endpoints: ["leaf3:eth1","leaf4:eth1"]
+    - endpoints: ["leaf3:eth2","leaf4:eth2"]
